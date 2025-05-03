@@ -33,34 +33,42 @@ const urlsToCache = [
 
 // Install event
 self.addEventListener('install', event => {
-    event.waitUntil(
+  event.waitUntil(
       caches.open(CACHE_NAME).then(cache => {
-        return cache.addAll(urlsToCache);
+          return cache.addAll(urlsToCache);
       })
-    );
-  });
-  
+  );
+});
+
   // Fetch event
   self.addEventListener('fetch', event => {
     event.respondWith(
-      caches.match(event.request).then(response => {
-        // Return cached response or fetch from network
-        return response || fetch(event.request);
-      })
+        caches.match(event.request).then(response => {
+            const fetchPromise = fetch(event.request).then(networkResponse => {
+                // Update the cache in the background
+                return caches.open(CACHE_NAME).then(cache => {
+                    cache.put(event.request, networkResponse.clone());
+                    return networkResponse;
+                });
+            }).catch(() => response); // if offline, use cache
+
+            return response || fetchPromise;
+        })
     );
-  });
+});
+
   
   // Activate event
   self.addEventListener('activate', event => {
     event.waitUntil(
-      caches.keys().then(cacheNames => {
-        return Promise.all(
-          cacheNames.map(name => {
-            if (name !== CACHE_NAME) {
-              return caches.delete(name);
-            }
-          })
-        );
-      })
+        caches.keys().then(cacheNames => {
+            return Promise.all(
+                cacheNames.map(cache => {
+                    if (cache !== CACHE_NAME) {
+                        return caches.delete(cache); // delete old versions
+                    }
+                })
+            );
+        })
     );
-  });
+});
