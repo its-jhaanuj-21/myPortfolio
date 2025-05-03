@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker
-        .register('/assets/js/service-worker.js')
+        .register('/servive-worker.js')
         .then(registration => {
           console.log('✅ Service Worker registered: ', registration.scope);
         })
