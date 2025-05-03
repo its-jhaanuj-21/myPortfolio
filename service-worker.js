@@ -1,15 +1,16 @@
-const CACHE_NAME = 'my-site-cache-v3';
+const CACHE_NAME = 'my-site-cache-v4';
+
 const urlsToCache = [
-    '/', // index.html
+    '/',
     '/index.html',
     '/assets/css/styles.css',
-    
+
     // Favicons and Manifest
     '/assets/favicon/apple-touch-icon.png',
     '/assets/favicon/favicon-96x96.png',
     '/assets/favicon/favicon.ico',
     '/assets/favicon/favicon.svg',
-    '/assets/favicon/site.webmanifest',
+    '/site.webmanifest',
     '/assets/favicon/web-app-manifest-192x192.png',
     '/assets/favicon/web-app-manifest-512x512.png',
 
@@ -27,48 +28,44 @@ const urlsToCache = [
     '/assets/images/social-sprite.png',
     '/assets/images/workshop.jpg',
 
-    // JavaScript
+    // JS
     '/assets/js/script.js'
 ];
 
-// Install event
+// INSTALL
 self.addEventListener('install', event => {
-  event.waitUntil(
-      caches.open(CACHE_NAME).then(cache => {
-          return cache.addAll(urlsToCache);
-      })
-  );
+    event.waitUntil(
+        caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
+    );
+    self.skipWaiting(); // optional but good to activate immediately
 });
 
-  // Fetch event
-  self.addEventListener('fetch', event => {
+// ACTIVATE
+self.addEventListener('activate', event => {
+    event.waitUntil(
+        caches.keys().then(keys =>
+            Promise.all(
+                keys.map(key => {
+                    if (key !== CACHE_NAME) {
+                        return caches.delete(key);
+                    }
+                })
+            )
+        )
+    );
+    self.clients.claim();
+});
+
+// FETCH
+self.addEventListener('fetch', event => {
     event.respondWith(
-        caches.match(event.request).then(response => {
-            const fetchPromise = fetch(event.request).then(networkResponse => {
-                // Update the cache in the background
+        fetch(event.request)
+            .then(networkResponse => {
                 return caches.open(CACHE_NAME).then(cache => {
                     cache.put(event.request, networkResponse.clone());
                     return networkResponse;
                 });
-            }).catch(() => response); // if offline, use cache
-
-            return response || fetchPromise;
-        })
-    );
-});
-
-  
-  // Activate event
-  self.addEventListener('activate', event => {
-    event.waitUntil(
-        caches.keys().then(cacheNames => {
-            return Promise.all(
-                cacheNames.map(cache => {
-                    if (cache !== CACHE_NAME) {
-                        return caches.delete(cache); // delete old versions
-                    }
-                })
-            );
-        })
+            })
+            .catch(() => caches.match(event.request))
     );
 });
