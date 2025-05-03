@@ -97,3 +97,11 @@ if ('serviceWorker' in navigator) {
     });
   }
   
+
+  window.addEventListener('offline', function () {
+    alert('⚠️ You are now offline. Some features may not work.');
+});
+
+window.addEventListener('online', function () {
+    alert('✅ You are back online!');
+});
