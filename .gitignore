@@ -1,0 +1,9 @@
+# Dependency directories
+node_modules/
+
+package.json
+package-lock.json
+
+
+
+# npm install --save-dev gulp gulp-cli gulp-sass sass gulp-clean-css gulp-uglify gulp-imagemin imagemin-mozjpeg imagemin-pngquant imagemin-svgo gulp-rename gulp-htmlmin gulp-connect 
