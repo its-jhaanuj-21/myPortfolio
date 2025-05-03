@@ -17,6 +17,14 @@ A basic, fully responsive portfolio website built with modern web optimization t
 
 ---
 
+## 🔗 Links
+
+- 🌐 Live Demo: [View Portfolio](https://my-portfolio-amber-nine-27.vercel.app/)
+- 📬 Contact: [Email Me](mailto:anujjha2106@gmail.com)
+- 💼 LinkedIn: [Anuj Kumar Jhaa](https://www.linkedin.com/in/itsjhaanuj21/)
+
+---
+
 ## 🛠️ Web Optimization Techniques Implemented
 
 - ✅ Implemented **Service Worker** to enable offline capabilities
@@ -58,11 +66,8 @@ Set up your tasks in `gulpfile.js` to handle:
 ## 🖼️ Screenshot
 ![Screenshot_4-5-2025_41559_my-portfolio-amber-nine-27 vercel app](https://github.com/user-attachments/assets/cef96e95-a1f9-4625-9279-14eab7a9855d)
 
-> _Add a screenshot here to showcase your portfolio interface_
+> _Screenshot of the Portfolio_
 
-```
-![Portfolio Screenshot](screenshots/portfolio-preview.png)
-```
 
 ---
 
