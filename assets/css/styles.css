@@ -237,6 +237,7 @@ section {
 .hero-image {
     flex: 1;
     text-align: center;
+    border-radius: 100%;
 }
 
 .hero-image img {
