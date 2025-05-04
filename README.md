@@ -19,7 +19,7 @@ A modern, responsive portfolio website built with HTML, CSS, and JavaScript, opt
 
 - 🌐 Live Demo: [View Portfolio](https://my-portfolio-amber-nine-27.vercel.app/)
 - 📬 Contact: [Email Me](mailto:anujjha2106@gmail.com)
-- 💼 LinkedIn: [Anuj Kumar Jhaa](https://www.linkedin.com/in/itsjhaanuj21/)
+- 💼 LinkedIn: [Anuj Kumar Jha](https://www.linkedin.com/in/itsjhaanuj21/)
 
 ---
 
@@ -179,4 +179,4 @@ The output will be written to the `/dist` folder.
 
 ---
 
-> Created and maintained by **Anuj Kumar Jhaa**
+> Created and maintained by **Anuj Kumar Jha**
