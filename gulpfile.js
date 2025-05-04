@@ -98,6 +98,16 @@ gulp.task('copy-favicon6', function () {
 });
 
 
+// Copy Fonts 
+gulp.task('copy-font1', function () {
+  return gulp.src('assets/fonts/segoeui-subset.woff2')
+    .pipe(gulp.dest('dist/assets/fonts'));
+});
+
+gulp.task('copy-font2', function () {
+  return gulp.src('assets/fonts/segoeuib-subset.woff2')
+    .pipe(gulp.dest('dist/assets/fonts'));
+});
 
 
 // Minify HTML
@@ -120,7 +130,7 @@ gulp.task('watch', function () {
 
 // Default Task
 gulp.task('default',
-  gulp.parallel('minify-css', 'minify-js','minify-sw', 'optimize-jpg', 'optimize-png', 'optimize-svg', 'copy-favicon1', 'copy-favicon2','copy-favicon3','copy-favicon4','copy-favicon5','copy-favicon6', 'minify-html', 'watch')
+  gulp.parallel('minify-css', 'minify-js','minify-sw', 'optimize-jpg', 'optimize-png', 'optimize-svg', 'copy-favicon1', 'copy-favicon2','copy-favicon3','copy-favicon4','copy-favicon5','copy-favicon6', 'copy-font1', 'copy-font2', 'minify-html', 'watch')
 );
 
 

@@ -1,19 +1,17 @@
 
 # 📁 myPortfolio
 
-A basic, fully responsive portfolio website built with modern web optimization techniques to improve performance, accessibility, and user experience.
+A modern, responsive portfolio website built with HTML, CSS, and JavaScript, optimized for performance, offline access, and scalability.
 
 ## 🚀 Features
 
-- Responsive HTML, CSS, and JavaScript-based layout
-- **Progressive Web App (PWA)** ready:
-  - `manifest.webmanifest` configured
-  - Service Worker for offline caching
-- **Image optimization** using Gulp and imagemin plugins
-- **CSS and JS minification** for faster load times
-- **CDN** usage for scalable and fast-loading icons
-- **Image sprite** for social media icons
-- **Live reload** enabled via Gulp (optional via `gulp-connect`)
+- ✅ Fully responsive design
+- ✅ **Progressive Web App (PWA)** with service worker and manifest
+- ✅ **Image optimization** via Gulp and `imagemin`
+- ✅ **CSS & JS minification** for fast loading
+- ✅ **Font subsetting** to reduce font file size
+- ✅ **Image sprite** for social icons to reduce HTTP requests
+- ✅ Live reload development server (optional)
 
 ---
 
@@ -25,49 +23,10 @@ A basic, fully responsive portfolio website built with modern web optimization t
 
 ---
 
-## 🛠️ Web Optimization Techniques Implemented
-
-- ✅ Implemented **Service Worker** to enable offline capabilities
-- ✅ Converted project into a **Progressive Web App (PWA)**
-- ✅ Loaded **CDN-hosted icons** for efficient delivery
-- ✅ Created **image sprite** for social media icons to reduce HTTP requests
-- ✅ **Optimized image sizes** using `imagemin`, `mozjpeg`, `pngquant`, and `svgo`
-
----
-
-## ⚙️ Gulp Setup & Build Process
-
-This project uses Gulp to automate development and optimization tasks.
-
-### 🔧 Step 1: Initialize Project
-
-```bash
-npm init -y
-```
-
-### 📦 Step 2: Install Dependencies
-
-```bash
-npm install --save-dev gulp gulp-cli gulp-sass sass gulp-clean-css gulp-uglify gulp-imagemin imagemin-mozjpeg imagemin-pngquant imagemin-svgo gulp-rename gulp-htmlmin gulp-connect
-```
-
-### 📂 Step 3: Gulp Configuration
-
-Set up your tasks in `gulpfile.js` to handle:
-- CSS/JS minification
-- Image optimization
-- HTML minification
-- File watching
-- Live reloading
-- Asset copying
-
----
-
 ## 🖼️ Screenshot
 ![Screenshot_4-5-2025_41559_my-portfolio-amber-nine-27 vercel app](https://github.com/user-attachments/assets/cef96e95-a1f9-4625-9279-14eab7a9855d)
 
 > _Screenshot of the Portfolio_
-
 
 ---
 
@@ -77,34 +36,153 @@ Set up your tasks in `gulpfile.js` to handle:
 myPortfolio/
 │
 ├── assets/
-│   ├── css/
-│   ├── js/
-│   ├── images/
-│   └── favicon/
+│   ├── css/               # Stylesheets
+│   ├── js/                # Scripts (with SW registration)
+│   ├── fonts/             # Subset fonts (woff2)
+│   ├── images/            # Optimized images
+│   └── favicon/           # Generated favicons
 │
-├── dist/               # Production build output
+├── dist/                  # Optimized build output
 ├── index.html
-├── site.webmanifest
-├── service-worker.js
+├── site.webmanifest       # PWA manifest
+├── service-worker.js      # Custom Service Worker
 ├── gulpfile.js
-├── package.json
+├── charset.txt            # Used for font subsetting
 └── .gitignore
+```
+
+---
+
+## ⚙️ Build Process Using Gulp
+
+### 🔧 Step 1: Initialize Project
+
+```bash
+npm init -y
+```
+
+### 📦 Step 2: Install Dev Dependencies
+
+```bash
+npm install --save-dev gulp gulp-cli gulp-sass sass gulp-clean-css gulp-uglify gulp-imagemin imagemin-mozjpeg imagemin-pngquant imagemin-svgo gulp-rename gulp-htmlmin gulp-connect
+```
+
+### ⚙️ Step 3: Create `gulpfile.js`
+
+Set up tasks for:
+
+- HTML minification
+- SCSS → CSS compilation and minification
+- JS uglification
+- Image compression
+- Live server and file watching
+
+---
+
+## 🛡️ Progressive Web App (PWA)
+
+### 🗂️ Files
+
+- `site.webmanifest` defines PWA metadata and icons.
+- `service-worker.js` handles offline caching.
+- Service worker is registered in `assets/js/script.js`.
+
+### 🌐 How to Test
+
+1. Open Chrome DevTools → Lighthouse → Check "Progressive Web App"
+2. Run audit.
+3. You should see a "PWA ready" green score.
+4. Try offline mode to verify caching works.
+
+---
+
+## 🔠 Font Subsetting Optimization
+
+To reduce font file size, only necessary characters are retained using `pyftsubset` from the [fonttools](https://github.com/fonttools/fonttools) library.
+
+### 🧰 Tools Required
+
+```bash
+pip install fonttools brotli zopfli
+```
+
+### 📜 Steps to Subset Fonts
+
+#### 1. Create `charset.txt` manually
+
+Create a file named `charset.txt` in your root folder and paste the following character set:
+
+```
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+abcdefghijklmnopqrstuvwxyz
+0123456789
+.,:;!?()[]{}"'“”‘’@#$%&*-+=_/\
+<>=~`^|€
+```
+
+#### 2. Subset the fonts:
+
+```bash
+pyftsubset assets/fonts/segoeui.woff --text-file=charset.txt --flavor=woff2 --output-file=assets/fonts/segoeui-subset.woff2 --with-zopfli
+pyftsubset assets/fonts/segoeuib.woff --text-file=charset.txt --flavor=woff2 --output-file=assets/fonts/segoeuib-subset.woff2 --with-zopfli
+```
+
+#### 3. Reference in `styles.css`:
+
+```css
+@font-face {
+  font-family: 'SegoeUI';
+  src: url('../fonts/segoeui-subset.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SegoeUI';
+  src: url('../fonts/segoeuib-subset.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+```
+
+Then use:
+
+```css
+body {
+  font-family: 'SegoeUI', sans-serif;
+}
 ```
 
 ---
 
 ## 📦 Build Instructions
 
-To build and watch the project:
+Run the default Gulp tasks and watch for changes:
 
 ```bash
 npx gulp
 ```
 
-The optimized output will be generated in the `dist/` directory.
+The output will be written to the `/dist` folder.
 
 ---
 
-## 📜 License
+## 🧪 Development Workflow
 
-This project is licensed under the MIT License.
+- `npx gulp` — runs live server, watches files, and optimizes assets
+- Update source files in `assets/`, then Gulp takes care of:
+  - Live reload
+  - CSS/JS minification
+  - Image compression
+  - Copying updated files to `dist/`
+
+---
+
+## 📝 License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+> Created and maintained by **Anuj Kumar Jhaa**
