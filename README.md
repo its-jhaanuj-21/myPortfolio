@@ -179,10 +179,4 @@ The output will be written to the `/dist` folder.
 
 ---
 
-## 📝 License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
-
 > Created and maintained by **Anuj Kumar Jhaa**
