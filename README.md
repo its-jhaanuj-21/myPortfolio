@@ -108,7 +108,19 @@ pip install fonttools brotli zopfli
 
 ### 📜 Steps to Subset Fonts
 
-#### 1. Create `charset.txt` manually
+#### 1. Font Selection  
+
+Select any font from computer font with format `font_name.ttf` which means, `TrueType font file` here we are using `SegoeUI` -> `segoeui.ttf` & `segoeuib.ttf`
+
+#### 2. Conversion 
+
+Convert both `.ttf` format into `.woff` which means `Web Open Font Format` by any online conversion tool.
+
+#### 3. Add `.woff` in project
+
+Add both `.woff` into project directory -> `assets/fonts/`
+
+#### 4. Create `charset.txt` manually
 
 Create a file named `charset.txt` in your root folder and paste the following character set:
 
@@ -120,14 +132,14 @@ abcdefghijklmnopqrstuvwxyz
 <>=~`^|€
 ```
 
-#### 2. Subset the fonts:
+#### 5. Subset the fonts:
 
 ```bash
 pyftsubset assets/fonts/segoeui.woff --text-file=charset.txt --flavor=woff2 --output-file=assets/fonts/segoeui-subset.woff2 --with-zopfli
 pyftsubset assets/fonts/segoeuib.woff --text-file=charset.txt --flavor=woff2 --output-file=assets/fonts/segoeuib-subset.woff2 --with-zopfli
 ```
 
-#### 3. Reference in `styles.css`:
+#### 6. Reference in `styles.css`:
 
 ```css
 @font-face {
@@ -144,6 +156,7 @@ pyftsubset assets/fonts/segoeuib.woff --text-file=charset.txt --flavor=woff2 --o
   font-style: normal;
   font-display: swap;
 }
+
 ```
 
 Then use:
